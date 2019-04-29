@@ -3,12 +3,12 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-		<title>reveal.js</title>
+		<meta name="robots" content="noindex">
+		<title>Savor Seattle Testing Options</title>
 
 		<link rel="stylesheet" href="css/reset.css">
 		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css">
+		<link rel="stylesheet" href="css/theme/night.css">
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/monokai.css">
@@ -25,25 +25,85 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section>
+					<h2>Issue #1</h2>
+					<p>
+						A number of people didn't seem to make use of the top navigation on desktop devices 
+						and couldn't find the self-guided tasting passports page.
+					</p>
+					<p>
+						<img src="img/issue1.gif" alt="">
+					</p>
+				</section>
+				<section>
+					<h2>Potential Solution</h2>
+					<p>
+						We hypothesized that users were mistaking the links for regular text and 
+						thought that by adding subtle indications we could overcome this issue.
+					</p>
+					<p>
+						<img src="img/test1-var1.gif" alt=""><br>
+						<img src="img/test1-var2.gif" alt=""><br>
+						<img src="img/test1-var3.gif" alt="">
+					</p>
+				</section>
+				<section>
+					<h2>Results</h2>
+					<p>
+						We decided this would make a simple test and ran that experiment 
+						over the period of 1 week. Unfortunately, the results were extremely 
+						poor and we decided to end the experiment early as a result.
+					</p>
+					<p>
+						<img src="img/test1-results.gif" alt="">
+					</p>
+				</section>
 			</div>
 		</div>
 
 		<script src="js/reveal.js"></script>
 
 		<script>
-			// More info about config & dependencies:
-			// - https://github.com/hakimel/reveal.js#configuration
-			// - https://github.com/hakimel/reveal.js#dependencies
+
+			const presenting = false;
+
+			if (presenting) {
+				var masterKey = '15565070618491508833';
+				var plugin = 'plugin/multiplex/master.js';
+			} else {
+				var secret = null;
+				var plugin = 'plugin/multiplex/client.js';
+			}
+
+			// More info https://github.com/hakimel/reveal.js#configuration
 			Reveal.initialize({
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				multiplex: {
+					// Example values. To generate your own, see the socket.io server instructions.
+					secret: masterKey, // null so the clients do not have control of the master presentation
+					id: 'f7c1582ed879a9ff', // id, obtained from socket.io server
+					url: 'https://reveal-js-multiplex-ccjbegmaii.now.sh' // Location of socket.io server
+				},
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
 				dependencies: [
-					{ src: 'plugin/markdown/marked.js' },
-					{ src: 'plugin/markdown/markdown.js' },
-					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true }
+					{ src: '//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js', async: true },
+					{ src: plugin, async: true },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true },
+					{ src: 'plugin/search/search.js', async: true },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
 				]
 			});
+
 		</script>
 	</body>
 </html>
